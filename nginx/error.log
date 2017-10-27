@@ -1,3 +1,11 @@
 format /^(?<time>[^ ]+ [^ ]+) \[(?<log_level>.*)\] (?<pid>\d*)#(?<tid>[^:]*): \*(?<serial>\d*) (?<message>.*), client: (?<client>.*), server: (?<server>.*), request: \"(?<method>.*) (?<path>.*) (?<protocol>.*)/(?<version>.*)\", host: "(?<host>.*)"$/
 
 2017/10/25 16:05:47 [error] 30913#0: *172643 open() "/usr/share/nginx/html/1" failed (2: No such file or directory), client: 10.0.1.10, server: www.nuwarobotics.com, request: "GET /1 HTTP/1.1", host: "10.0.1.10"
+
+
+
+
+2017/10/27 10:59:54 [error] 22379#0: *244035 open() "/usr/share/nginx/html/123" failed (2: No such file or directory), client: 10.1.1.10, server: dev-api.nuwarobotics.com, request: "GET /123 HTTP/1.1", host: "10.1.1.10"
+
+format /^(?<time>[^ ]+ [^ ]+) \[(?<log_level>.*)\] (?<pid>\d*)#(?<tid>[^:]*): \*(?<serial>\d*) (?<message>.*), client: (?<remote>.*), server: (?<server>.*), request: \"(?<method>.*) (?<path>.*) (?<protocol>.*)/(?<version>.*)\", host: "(?<host>.*)"$/
+

@@ -11,3 +11,13 @@ PUT /dev-nginx-access-20171027/_mapping/server?update_all_types
     }
   }
 }
+
+PUT /dev-nginx-error-20171027/_mapping/server?update_all_types
+{
+  "properties": {
+    "server": { 
+      "type": "text",
+      "fielddata": true
+    }
+  }
+}

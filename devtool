@@ -1,0 +1,13 @@
+GET /_cat/indices?v
+
+GET dev-nginx-access-20171027
+
+PUT /dev-nginx-access-20171027/_mapping/server?update_all_types
+{
+  "properties": {
+    "server": { 
+      "type": "text",
+      "fielddata": true
+    }
+  }
+}

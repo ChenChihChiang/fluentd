@@ -1,0 +1,9 @@
+PUT /fluentd-20171026/_mapping/container_name
+{
+  "properties": {
+    "my_field": { 
+      "type":     "text",
+      "fielddata": true
+    }
+  }
+}

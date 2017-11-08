@@ -3,6 +3,8 @@ import datetime
 import sys
 
 code = sys.argv[1]
+warning = int(sys.argv[2])
+critical = int(sys.argv[3])
 
 d1 = datetime.datetime.now()
 #d3 = d1 + datetime.timedelta(minutes=-5)
@@ -67,4 +69,13 @@ s = (getdata['hits']['total'])
 
 t = (round(s/m*100,2))
 
-print ("%s code percentage : OK | time=%s" % (code, t))
+
+if t > critical:
+   status = "critical"
+elif t > warning:
+   status = "warning"
+else:
+   status = "ok"
+
+
+print ("%s percentage: %s | time=%s;70;80;0;100" % (code, status, t))

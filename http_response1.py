@@ -3,6 +3,7 @@ from elasticsearch import Elasticsearch
 import datetime
 
 d1 = datetime.datetime.now()
+#d3 = d1 + datetime.timedelta(minutes=-5)
 d3 = d1 + datetime.timedelta(days=-5)
 
 #print (d1.strftime("%Y-%m-%dT%H:%M:%S"))
@@ -11,7 +12,8 @@ d3 = d1 + datetime.timedelta(days=-5)
 nowtime = d1.strftime("%Y-%m-%dT%H:%M:%S")
 before5 = d3.strftime("%Y-%m-%dT%H:%M:%S")
 
-es = Elasticsearch([{'host': '52.68.214.54', 'port': '9200'}])
+#es = Elasticsearch([{'host': '52.68.214.54', 'port': '9200'}])
+es = Elasticsearch([{'host': '10.0.0.11', 'port': '9200'}])
 
 qdoc = {
   "query": {
@@ -30,17 +32,20 @@ qdoc = {
 }
 
 
+
+
 fdoc = {
   "query": {
     "bool": {
       "filter":{
         "bool":{
           "must": [
-            {"match": {"response_code": "404"}},
+            {"match_all": {}},
+            #{"match": {"response_code": "404"}},
             {"range": {
               "@timestamp": {
-                "gte": "2017-11-06T00:00:00+08:00",
-                "lte": "2017-11-07T23:59:59+08:00"}
+                "gte": before5+"+08:00",
+                "lte": nowtime+"+08:00"}
               }
             }
           ]
@@ -51,14 +56,24 @@ fdoc = {
 }
 
 
+getdata = es.search(index="uat-nginx-access*", body=fdoc)
+
+#print (getdata['hits']['total'])
+
+m = getdata['hits']['total']
+
 getdata = es.search(index="uat-nginx-access*", body=qdoc)
 
 #print (getdata['hits']['total'])
-times = getdata['hits']['total']
 
+s = getdata['hits']['total']
 
-print ("404 times in 5 minutes | 404 time=".times)
+mm = float(m)
+ss = float(s)
+t = ss/mm*100
+print (round(t,2))
 
 
 #print (nowtime)
 #print (before5)
+

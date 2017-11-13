@@ -7,3 +7,6 @@ format /^(?<remote>[^ ]*) (?<host>[^ ]*) (?<user>[^ ]*) \[(?<time>[^\]]*)\] \"(?
 dev-api.nuwarobotics.com 22379 1509073194.264 244035 10.1.1.10 - - [27/Oct/2017:10:59:54 +0800] "GET /123 HTTP/1.1" 404 3650 "-" "curl/7.29.0" "-"
 
 format /^(?<server>.*) (?<pid>.*) (?<msec>.*) (?<serial>.*) (?<remote>[^ ]*) (?<host>[^ ]*) (?<user>[^ ]*) \[(?<time>[^\]]*)\] \"(?<method>.*) (?<path>/+.*) (?<protocol>.*)/(?<version>.*)" (?<response_code>.*) (?<size>.*) \"-\" \"(?<message>.*)$/
+
+
+www.nuwarobotics.com 24039 1510555476.030 0.003 10 10.0.0.10 - - [13/Nov/2017:14:44:36 +0800] "GET / HTTP/1.0" 200 3700 "-" "check_http/v2.2.1 (nagios-plugins 2.2.1)" "-"

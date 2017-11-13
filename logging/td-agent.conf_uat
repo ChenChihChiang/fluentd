@@ -106,15 +106,54 @@
 #  </store>
 #</match>
 
-<match **>
+<source>
+  @type tail
+  path /var/log/nginx/access.log
+  tag nginx.access
+  pos_file /var/log/td-agent/nginx.access.pos
+  
+  format /^(?<server>.*) (?<pid>.*) (?<msec>.*) (?<timespent>.*) (?<serial>.*) (?<remote>[^ ]*) (?<host>[^ ]*) (?<user>[^ ]*) \[(?<time>[^\]]*)\] \"(?<method>.*) (?<path>/+.*) (?<protocol>.*)/(?<version>.*)" (?<response_code>\d{3}) (?<size>.*) \"-\" \"(?<message>.*)$/ 
+  
+  time_key time_local
+</source>
+
+<match nginx.access>
   @type elasticsearch
-  host localhost
+  host uat-logging
   port 9200
   logstash_format true
-  logstash_prefix uat-docker
+  logstash_prefix uat-nginx-access
   logstash_dateformat %Y%m%d
   include_tag_key true
   type_name access_log
+  tag_key @log_name
+  flush_interval 1s
+</match>
+
+<source>
+  type tail
+  path /var/log/nginx/error.log
+  tag nginx.error
+  pos_file /var/log/td-agent/nginx.error.pos
+ 
+  #format multiline
+  #format_firstline /^\d{4}/\d{2}/\d{2} \d{2}:\d{2}:\d{2} \[\w+\] (?<pid>\d+).(?<tid>\d+): /
+  #format1 /^(?<time>\d{4}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}) \[(?<log_level>\w+)\] (?<pid>\d+).(?<tid>\d+): (?<message>.*)/
+  
+  format /^(?<time>[^ ]+ [^ ]+) \[(?<log_level>.*)\] (?<pid>\d*)#(?<tid>[^:]*): \*(?<serial>\d*) (?<message>.*), client: (?<remote>.*), server: (?<server>.*), request: \"(?<method>.*) (?<path>.*) (?<protocol>.*)/(?<version>.*)\", host: "(?<host>.*)"$/
+
+  flush_interval 1s
+</source>
+
+<match nginx.error>
+  @type elasticsearch
+  host uat-logging
+  port 9200
+  logstash_format true
+  logstash_prefix uat-nginx-error
+  logstash_dateformat %Y%m%d
+  include_tag_key true
+  type_name error_log
   tag_key @log_name
   flush_interval 1s
 </match>

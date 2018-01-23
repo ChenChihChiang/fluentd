@@ -1,7 +1,5 @@
 GET /_cat/indices?v
 
-GET /_cat/_template
-
 GET /uat-nginx-access-20180119
 
 GET /dev-nginx-access-20180119
